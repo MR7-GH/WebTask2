@@ -27,7 +27,7 @@ const Header = ({ paintingTitle, setPaintingTitle, onImport, onExport }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200">
+    <div className="bg-gray-800 rounded-xl shadow-lg p-6 mb-6 border border-gray-700">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {isEditingTitle ? (
@@ -37,12 +37,12 @@ const Header = ({ paintingTitle, setPaintingTitle, onImport, onExport }) => {
               onChange={(e) => setPaintingTitle(e.target.value)}
               onBlur={() => setIsEditingTitle(false)}
               onKeyPress={(e) => e.key === 'Enter' && setIsEditingTitle(false)}
-              className="text-2xl font-bold bg-transparent border-b-2 border-blue-500 outline-none px-2 py-1"
+              className="text-2xl font-bold bg-transparent border-b-2 border-blue-400 outline-none px-2 py-1 text-white"
               autoFocus
             />
           ) : (
             <h1 
-              className="text-2xl font-bold text-gray-800 cursor-pointer hover:text-blue-600 transition-colors flex items-center gap-2"
+              className="text-2xl font-bold text-white cursor-pointer hover:text-blue-400 transition-colors flex items-center gap-2"
               onClick={() => setIsEditingTitle(true)}
             >
               {paintingTitle}
