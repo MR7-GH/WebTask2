@@ -1,70 +1,93 @@
-# Getting Started with Create React App
+# 🎨 تمرین دوم درس طراحی وب
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+من این پروژه را به عنوان **تمرین دوم درس طراحی وب** توسعه دادم. هدف این بود که یک بوم طراحی گرافیکی داشته باشم که بتوانم اشکال مختلف را روی آن اضافه، شمارش، جابه‌جا و رنگ آن‌ها (اضافی) را تغییر دهم.
 
-## Available Scripts
+## 📦 تکنولوژی‌ها و کتابخانه‌ها
 
-In the project directory, you can run:
+- ReactJS: ساخت SPA با استفاده از کامپوننت‌های مجزا.
+- TailwindCSS: طراحی ظاهری با utility-first کلاس‌ها.
+- Lucide-react: آیکون‌های مدرن و قابل کنترل.
+- JavaScript ES6: منطق کلی برنامه‌نویسی.
 
-### `npm start`
+## 🧱 ساختار کلی پروژه
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+src/
+├── App.js               # کنترل کننده وضعیت کلی و توزیع props
+├── index.js             # نقطه شروع پروژه React
+├── components/
+│   ├── Canvas.js        # نمایش و کنترل بوم ترسیم
+│   ├── Sidebar.js       # سایدبار برای اضافه کردن اشکال
+│   ├── ShapeCounter.js  # شمارش و نمایش تعداد اشکال
+│   └── Header.js        # عنوان بالای صفحه
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧩 توضیح کامل کدهای نسخه اول
 
-### `npm test`
+### 1. App.js
+در این فایل من وضعیت کلی اشکال را نگه می‌دارم:
+- یک `shapes` برای نگه داشتن لیست اشکال.
+- یک `counters` برای ذخیره تعداد اشکال از هر نوع.
+- از طریق props، این داده‌ها را به `Canvas` و `Sidebar` می‌فرستم.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Sidebar.js
+در این کامپوننت من از آیکون‌های `lucide-react` برای نمایش دکمه‌های افزودن دایره، مربع و مثلث استفاده کردم. هر دکمه با `onClick` به تابع `addShape` متصل است که در `App.js` تعریف شده.
+### 3. ShapeCounter.js
+یک کامپوننت بسیار ساده و مستقل است که فقط یک نام و عدد دریافت می‌کند و آن را نمایش می‌دهد.
+### 4. Canvas.js
+در این فایل من از `map` استفاده می‌کنم تا لیستی از اشکال را روی صفحه رسم کنم. برای هر شکل از ویژگی‌های `type` و `position` استفاده می‌کنم.
 
-### `npm run build`
+## ⚙️ ویژگی‌های اضافه‌شده در نسخه دوم
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### ✅ ۱. قابلیت جابه‌جایی اشکال
+در نسخه دوم، من برای هر شکل قابلیت `drag and drop` اضافه کردم. برای این کار:
+- روی المنت هر شکل از ویژگی `draggable` استفاده کردم.
+- رویدادهای `onDragStart`، `onDragOver` و `onDrop` را مدیریت کردم.
+- مختصات جدید را محاسبه کرده و وضعیت `shapes` را آپدیت کردم.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### ✅ ۲. پشتیبانی از تم تیره (Dark Mode)
+من در Tailwind از کلاس `dark:` استفاده کردم. برای مثال:
+```html
+<div className="bg-white dark:bg-gray-900">
+```
+همچنین با استفاده از وضعیت داخلی `isDarkMode` در `App.js`، تم را به صورت پویا تغییر می‌دهم.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ✅ ۳. قابلیت تغییر رنگ اشکال
+برای هر شکل یک نوار رنگ (`color picker`) زیر آن قرار دادم. از تگ `<input type='color'>` برای این کار استفاده کردم.
+- در لیست اشکال ویژگی `color` را اضافه کردم.
+- هنگام رندر هر شکل در `Canvas.js`، یک input قرار دادم که مقدار `color` را تغییر می‌دهد.
+- رنگ شکل‌ها با استایل inline به صورت `style={{ fill: shape.color }}` کنترل می‌شود.
 
-### `npm run eject`
+## 🚀 نحوه اجرای پروژه
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+npm start
+```
+اگر Tailwind یا Lucide نصب نبود:
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+npm install lucide-react
+```
+در نهایت هنگامی که tialwindcss نصب شد داخل فایل کانفیگ این موارد را قرار دهید :
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+‍‍‍
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📌 نتیجه‌گیری
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+در نسخه دوم کمی آپشن های بیشتری قرار دادم تا امتیاز از دست رفته برای این دو روز را جبران کنم :)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+برای نوشتن این داکیومنت readme از chatgpt کمک گرفتم و برای استایل ها کمی از claude کمک گرفتم. نسخه صفری که از پروژه درست کرده بودم کاملا ساده و سفید بود. سعی کردم استایل مناسبی لحاظ کنم .
